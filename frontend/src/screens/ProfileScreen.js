@@ -62,7 +62,7 @@ export default function ProfileScreen() {
     <div>
       <form className="form" onSubmit={submitHandler}>
         <div>
-          <h1>User Profile</h1>
+          <h1 className="user-profile">User Profile</h1>
         </div>
         {loading ? (
           <LoadingBox></LoadingBox>

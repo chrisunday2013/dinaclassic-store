@@ -10,11 +10,11 @@ const productRouter = express.Router();
 productRouter.get(
   '/',
   expressAsyncHandler(async (req, res) => {
-    const pageSize = 3;
+    const pageSize = 1000;
     const page = Number(req.query.pageNumber) || 1;
     const name = req.query.name || '';
     const category = req.query.category || '';
-    const seller = req.query.seller || '';
+  
     const order = req.query.order || '';
     const min =
       req.query.min && Number(req.query.min) !== 0 ? Number(req.query.min) : 0;
@@ -26,7 +26,7 @@ productRouter.get(
         : 0;
 
     const nameFilter = name ? { name: { $regex: name, $options: 'i' } } : {};
-    const sellerFilter = seller ? { seller } : {};
+  
     const categoryFilter = category ? { category } : {};
     const priceFilter = min && max ? { price: { $gte: min, $lte: max } } : {};
     const ratingFilter = rating ? { rating: { $gte: rating } } : {};
@@ -39,14 +39,14 @@ productRouter.get(
         ? { rating: -1 }
         : { _id: -1 };
     const count = await Product.count({
-      ...sellerFilter,
+  
       ...nameFilter,
       ...categoryFilter,
       ...priceFilter,
       ...ratingFilter,
     });
     const products = await Product.find({
-      ...sellerFilter,
+    
       ...nameFilter,
       ...categoryFilter,
       ...priceFilter,
@@ -113,8 +113,8 @@ productRouter.post(
       seller: req.user._id,
       image: '/images/p1.jpg',
       price: 0,
+      brand: 'product brand',
       category: 'sample category',
-      brand: 'sample brand',
       countInStock: 0,
       rating: 0,
       numReviews: 0,
@@ -135,8 +135,8 @@ productRouter.put(
       product.name = req.body.name;
       product.price = req.body.price;
       product.image = req.body.image;
-      product.category = req.body.category;
       product.brand = req.body.brand;
+      product.category = req.body.category;
       product.countInStock = req.body.countInStock;
       product.description = req.body.description;
       const updatedProduct = await product.save();

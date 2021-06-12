@@ -4,21 +4,15 @@ import { BrowserRouter, Link, Route } from 'react-router-dom';
 import { signout } from './actions/userActions';
 import AdminRoute from './components/AdminRoute';
 import PrivateRoute from './components/PrivateRoute';
-import CartScreen from './screens/CartScreen';
 import HomeScreen from './screens/HomeScreen';
-import OrderHistoryScreen from './screens/OrderHistoryScreen';
-import OrderScreen from './screens/OrderScreen';
-import PaymentMethodScreen from './screens/PaymentMethodScreen';
-import PlaceOrderScreen from './screens/PlaceOrderScreen';
 import ProductListScreen from './screens/ProductListScreen';
 import ProductScreen from './screens/ProductScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import RegisterScreen from './screens/RegisterScreen';
-import ShippingAddressScreen from './screens/ShippingAddressScreen';
+import MenuScreen from './screens/menuScreen';
 import SigninScreen from './screens/SigninScreen';
 import ProductEditScreen from './screens/ProductEditScreen';
-import OrderListScreen from './screens/OrderListScreen';
-import UserListScreen from './screens/UserListScreen';
+import UserListScreen from './screens/UserListScreen'
 import UserEditScreen from './screens/UserEditScreen';
 import SellerRoute from './components/SellerRoute';
 import SellerScreen from './screens/SellerScreen';
@@ -27,15 +21,13 @@ import SearchScreen from './screens/SearchScreen';
 import { listProductCategories } from './actions/productActions';
 import LoadingBox from './components/LoadingBox';
 import MessageBox from './components/MessageBox';
-import MapScreen from './screens/MapScreen';
-import DashboardScreen from './screens/DashboardScreen';
-import SupportScreen from './screens/SupportScreen';
-import ChatBox from './components/ChatBox';
+import { SocialIcon } from "react-social-icons"
+
 
 function App() {
   const cart = useSelector((state) => state.cart);
   const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
-  const { cartItems } = cart;
+  
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
   const dispatch = useDispatch();
@@ -65,23 +57,18 @@ function App() {
               <i className="fa fa-bars"></i>
             </button>
             <Link className="brand" to="/">
-              amazona
+              DINA-CLASSIC-WEARS
             </Link>
           </div>
           <div>
             <Route
               render={({ history }) => (
-                <SearchBox history={history}></SearchBox>
+                <SearchBox className="searchBox"history={history}></SearchBox>
               )}
             ></Route>
           </div>
-          <div>
-            <Link to="/cart">
-              Cart
-              {cartItems.length > 0 && (
-                <span className="badge">{cartItems.length}</span>
-              )}
-            </Link>
+          <div className="drop">
+          
             {userInfo ? (
               <div className="dropdown">
                 <Link to="#">
@@ -91,9 +78,7 @@ function App() {
                   <li>
                     <Link to="/profile">User Profile</Link>
                   </li>
-                  <li>
-                    <Link to="/orderhistory">Order History</Link>
-                  </li>
+            
                   <li>
                     <Link to="#signout" onClick={signoutHandler}>
                       Sign Out
@@ -113,9 +98,7 @@ function App() {
                   <li>
                     <Link to="/productlist/seller">Products</Link>
                   </li>
-                  <li>
-                    <Link to="/orderlist/seller">Orders</Link>
-                  </li>
+              
                 </ul>
               </div>
             )}
@@ -125,21 +108,15 @@ function App() {
                   Admin <i className="fa fa-caret-down"></i>
                 </Link>
                 <ul className="dropdown-content">
-                  <li>
-                    <Link to="/dashboard">Dashboard</Link>
-                  </li>
+              
                   <li>
                     <Link to="/productlist">Products</Link>
                   </li>
-                  <li>
-                    <Link to="/orderlist">Orders</Link>
-                  </li>
+      
                   <li>
                     <Link to="/userlist">Users</Link>
                   </li>
-                  <li>
-                    <Link to="/support">Support</Link>
-                  </li>
+          
                 </ul>
               </div>
             )}
@@ -148,7 +125,7 @@ function App() {
         <aside className={sidebarIsOpen ? 'open' : ''}>
           <ul className="categories">
             <li>
-              <strong>Categories</strong>
+              <strong className="categories">Categories</strong>
               <button
                 onClick={() => setSidebarIsOpen(false)}
                 className="close-sidebar"
@@ -163,7 +140,7 @@ function App() {
               <MessageBox variant="danger">{errorCategories}</MessageBox>
             ) : (
               categories.map((c) => (
-                <li key={c}>
+                <li className="category-list" key={c}>
                   <Link
                     to={`/search/category/${c}`}
                     onClick={() => setSidebarIsOpen(false)}
@@ -177,7 +154,6 @@ function App() {
         </aside>
         <main>
           <Route path="/seller/:id" component={SellerScreen}></Route>
-          <Route path="/cart/:id?" component={CartScreen}></Route>
           <Route path="/product/:id" component={ProductScreen} exact></Route>
           <Route
             path="/product/:id/edit"
@@ -186,11 +162,7 @@ function App() {
           ></Route>
           <Route path="/signin" component={SigninScreen}></Route>
           <Route path="/register" component={RegisterScreen}></Route>
-          <Route path="/shipping" component={ShippingAddressScreen}></Route>
-          <Route path="/payment" component={PaymentMethodScreen}></Route>
-          <Route path="/placeorder" component={PlaceOrderScreen}></Route>
-          <Route path="/order/:id" component={OrderScreen}></Route>
-          <Route path="/orderhistory" component={OrderHistoryScreen}></Route>
+          <Route path="/menu" component={MenuScreen}></Route>
           <Route
             path="/search/name/:name?"
             component={SearchScreen}
@@ -215,7 +187,7 @@ function App() {
             path="/profile"
             component={ProfileScreen}
           ></PrivateRoute>
-          <PrivateRoute path="/map" component={MapScreen}></PrivateRoute>
+      
           <AdminRoute
             path="/productlist"
             component={ProductListScreen}
@@ -226,41 +198,39 @@ function App() {
             component={ProductListScreen}
             exact
           ></AdminRoute>
-          <AdminRoute
-            path="/orderlist"
-            component={OrderListScreen}
-            exact
-          ></AdminRoute>
+        
           <AdminRoute path="/userlist" component={UserListScreen}></AdminRoute>
           <AdminRoute
             path="/user/:id/edit"
             component={UserEditScreen}
           ></AdminRoute>
 
-          <AdminRoute
-            path="/dashboard"
-            component={DashboardScreen}
-          ></AdminRoute>
-          <AdminRoute path="/support" component={SupportScreen}></AdminRoute>
-
           <SellerRoute
             path="/productlist/seller"
             component={ProductListScreen}
           ></SellerRoute>
-          <SellerRoute
-            path="/orderlist/seller"
-            component={OrderListScreen}
-          ></SellerRoute>
+    
 
           <Route path="/" component={HomeScreen} exact></Route>
         </main>
-        <footer className="row center">
-          {userInfo && !userInfo.isAdmin && <ChatBox userInfo={userInfo} />}
-          <div>All right reserved</div>{' '}
+        <footer className="foot">
+  
+          <div className="all">All right reserved</div>{' '} 
+          <br/>  <Link className="contact" to="/menu">Contact Us</Link>
+          
+           <div id="social-icons">
+                 <ul>
+                       <SocialIcon className="instagram"url="https://www.instagram.com/dina_classic_wear/" />
+                 </ul>  
+           </div>
+
+              <div className="uclassic"> Site Built by Uclassic Technologies</div>
         </footer>
       </div>
     </BrowserRouter>
   );
 }
+
+
 
 export default App;

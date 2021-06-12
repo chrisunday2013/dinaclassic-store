@@ -1,8 +1,8 @@
 {
-  "name": "amazona",
+  "name": "pop-a-meal",
   "type": "module",
   "version": "1.0.0",
-  "description": "Ecommerce website like amazon",
+  "description": "meal delivery app",
   "main": "index.js",
   "scripts": {
     "build": "cd frontend && npm install && npm run build",
@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/basir/amazona.git"
+    "url": ""
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/basir/amazona/issues"
+    "url": ""
   },
-  "homepage": "https://github.com/basir/amazona#readme",
+  "homepage": "",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "dotenv": "^8.2.0",
@@ -33,9 +33,6 @@
     "eslint": "^7.9.0",
     "eslint-plugin-react": "^7.21.2",
     "nodemon": "^2.0.4"
-  },
-  "engines": {
-    "node": "12.4.0",
-    "npm": "6.9.0"
   }
+  
 }

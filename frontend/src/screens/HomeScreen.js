@@ -8,6 +8,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { listProducts } from '../actions/productActions';
 import { listTopSellers } from '../actions/userActions';
 import { Link } from 'react-router-dom';
+import Animate from "../components/spring1";
+import Animate2 from "../components/spring2";
+import LoopTrue from "../components/spring3";
 
 export default function HomeScreen() {
   const dispatch = useDispatch();
@@ -23,31 +26,15 @@ export default function HomeScreen() {
 
   useEffect(() => {
     dispatch(listProducts({}));
-    dispatch(listTopSellers());
+  
   }, [dispatch]);
   return (
     <div>
-      <h2>Top Sellers</h2>
-      {loadingSellers ? (
-        <LoadingBox></LoadingBox>
-      ) : errorSellers ? (
-        <MessageBox variant="danger">{errorSellers}</MessageBox>
-      ) : (
-        <>
-          {sellers.length === 0 && <MessageBox>No Seller Found</MessageBox>}
-          <Carousel showArrows autoPlay showThumbs={false}>
-            {sellers.map((seller) => (
-              <div key={seller._id}>
-                <Link to={`/seller/${seller._id}`}>
-                  <img src={seller.seller.logo} alt={seller.seller.name} />
-                  <p className="legend">{seller.seller.name}</p>
-                </Link>
-              </div>
-            ))}
-          </Carousel>
-        </>
-      )}
-      <h2>Featured Products</h2>
+     <h1 className="dina">DINA CLASSIC WEARS</h1>
+        <Animate/>
+        <Animate2/>
+        <LoopTrue/>
+        <h2 className="available">Available Products</h2>
       {loading ? (
         <LoadingBox></LoadingBox>
       ) : error ? (

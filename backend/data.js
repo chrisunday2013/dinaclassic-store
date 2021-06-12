@@ -9,7 +9,7 @@ const data = {
       isAdmin: true,
       isSeller: true,
       seller: {
-        name: 'Puma',
+        name: 'chop complete',
         logo: '/images/logo1.png',
         description: 'best seller',
         rating: 4.5,
